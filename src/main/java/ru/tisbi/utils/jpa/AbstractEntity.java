@@ -17,4 +17,13 @@ public abstract class AbstractEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
     protected Long id;
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || this.getClass() != o.getClass()) {
+            return false;
+        }
+        AbstractEntity other = (AbstractEntity) o;
+        return other.id.equals(this.id);
+    }
 }
