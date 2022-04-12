@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta th:replace="fragments/meta">
   <title>Рейтинг</title>
 </head>
-<header th:replace="fragments/header"/>
-<body>
-  <div class="container">
-    <h1 class="row justify-content-center mb-4">
-      Рейтинг групп
-    </h1>
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="list-group">
-          <a th:each="rating: ${leaderboard}" class="list-group-item list-group-item-action">
-            <span th:text="${rating.place}"></span>.
-            <span th:text="${rating.group}"></span>
-          </a>
-        </div>
+<header th:replace="fragments/header" />
+
+<body class="container">
+  <h1 class="row justify-content-center mb-4">
+    Рейтинг групп
+  </h1>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="list-group">
+        <a th:each="rating: ${leaderboard}" class="list-group-item list-group-item-action">
+          <span th:text="${rating.place}"></span>.
+          <span th:text="${rating.group}"></span>
+        </a>
       </div>
     </div>
   </div>
 </body>
+
 </html>
