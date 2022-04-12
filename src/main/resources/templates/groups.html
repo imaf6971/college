@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta th:replace="fragments/meta">
+  <title>Группы</title>
+</head>
+<header th:replace="fragments/header" />
+
+<body>
+  <div class="container">
+    <h1>Группы</h1>
+    <div th:each="specialization: ${specializations}">
+      <h3 th:text="${specialization.key}"></h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Код Специальности</th>
+            <th scope="col">Номер Группы</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="group: ${specialization.value}">
+            <td>1</td>
+            <td th:text="${group.specialization.code}">ПМ</td>
+            <td th:text="${group.toNumberString()}">191/2</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+
+</html>
