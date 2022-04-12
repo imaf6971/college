@@ -11,15 +11,18 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import ru.tisbi.college.specializations.Specialization;
-import ru.tisbi.college.specializations.SpecializationRepository;
+import ru.tisbi.college.specializations.SpecializationService;
 
 @Service
 public class GroupServiceImpl implements GroupService {
 
     private final GroupRepository groupRepository;
 
-    public GroupServiceImpl(GroupRepository groupRepository, SpecializationRepository specializationRepository) {
+    private final SpecializationService specializationService;
+
+    public GroupServiceImpl(GroupRepository groupRepository, SpecializationService specializationService) {
         this.groupRepository = groupRepository;
+        this.specializationService = specializationService;
     }
 
     @Override
@@ -36,6 +39,14 @@ public class GroupServiceImpl implements GroupService {
         group.setAfterSeniorSchool(isAfterSeniorSchool);
         group.setNumber(number);
         return groupRepository.save(group);
+    }
+
+    @Override
+    public Group newGroup(GroupDto groupDto) {
+
+        var specialization = specializationService.getSpecializationById(groupDto.getSpecializationId());
+        return newGroup(specialization, Year.of(groupDto.getAdmissionYear()), groupDto.getIsAfterSeniorSchool(),
+                groupDto.getNumber());
     }
 
     @Override

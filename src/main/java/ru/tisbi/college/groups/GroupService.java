@@ -16,5 +16,7 @@ public interface GroupService {
     Group newGroup(Specialization specialization, Year admissionYear, boolean isAfterSeniorSchool,
             short number);
 
+    Group newGroup(GroupDto groupDto);
+
     Map<Specialization, List<Group>> groupsBySpecialization();
 }
