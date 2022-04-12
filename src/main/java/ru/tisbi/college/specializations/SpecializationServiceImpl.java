@@ -32,4 +32,11 @@ public class SpecializationServiceImpl implements SpecializationService {
         return specializationRepository.save(specialization);
     }
 
+
+    @Override
+    public Specialization getSpecializationById(Long id) {
+        return specializationRepository.findById(id)
+        .orElseThrow(() -> new SpecializationNotFoundException("Cant find specialization by id " + id));
+    }
+
 }

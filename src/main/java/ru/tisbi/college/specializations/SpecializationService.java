@@ -7,6 +7,8 @@ import java.util.List;
  */
 public interface SpecializationService {
 
+    Specialization getSpecializationById(Long id);
+
     List<Specialization> findAllSpecializations();
 
     Specialization getSpecializationByCode(String code);
