@@ -26,4 +26,9 @@ public abstract class AbstractEntity {
         AbstractEntity other = (AbstractEntity) o;
         return other.id.equals(this.id);
     }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }
