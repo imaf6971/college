@@ -16,4 +16,8 @@ public class GroupDto {
     public boolean getIsAfterSeniorSchool() {
         return isAfterSeniorSchool;
     }
+
+    public void setIsAfterSeniorSchool(boolean value) {
+        isAfterSeniorSchool = value;
+    }
 }

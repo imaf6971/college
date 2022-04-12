@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta th:replace="fragments/meta">
+  <title>Новая группа</title>
+</head>
+<header th:replace="fragments/header" />
+
+<body>
+  <div class="container">
+    <h1>Добавить группу</h1>
+    <form th:action="@{/groups/add}" th:object="${group}" method="post">
+
+      <div class="mb-3">
+        <label class="form-label">Код специальности</label>
+        <select th:field="*{specializationId}" class="form-select">
+          <option th:each="specialization: ${specializations}" th:value="${specialization.id}"
+            th:text="${specialization.code}"></option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Год поступления</label>
+        <input th:field="*{admissionYear}" type="number" class="form-control">
+      </div>
+
+      <div class="form-check mb-3">
+        <label class="form-check-label">После 11?</label>
+        <input th:field="*{isAfterSeniorSchool}" type="checkbox" class="form-check-input">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Номер группы</label>
+        <input th:field="*{number}" type="text" class="form-control">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Добавить</button>
+    </form>
+  </div>
+</body>
+
+</html>
