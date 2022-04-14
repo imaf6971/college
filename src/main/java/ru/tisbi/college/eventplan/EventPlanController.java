@@ -1,6 +1,8 @@
 package ru.tisbi.college.eventplan;
 
 import static java.time.format.TextStyle.FULL_STANDALONE;
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.toMap;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -25,13 +27,10 @@ public class EventPlanController {
 
     private final EventPlanService eventPlanService;
 
-    @ModelAttribute
-    public void monthDropdown(Model model) {
-        Map<Month, String> months = new LinkedHashMap<>();
-        for (var month: Month.values()) {
-            months.put(month, getMonthName(month));
-        }
-        model.addAttribute("months", months);
+    @ModelAttribute("months")
+    public Map<Month, String> monthDropdown() {
+        return stream(Month.values())
+                .collect(toMap(month -> month, this::getMonthName));
     }
 
     private String getMonthName(Month month) {
