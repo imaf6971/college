@@ -1,28 +1,35 @@
 package ru.tisbi.college.eventplan;
 
-import javax.persistence.Column;
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.Getter;
-import lombok.Setter;
-import ru.tisbi.utils.jpa.AbstractEntity;
+import ru.tisbi.college.model.TitledEntity;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "modules")
-public class EventModule extends AbstractEntity implements Comparable<EventModule> {
+public class EventModule extends TitledEntity {
 
-    @Column(name = "num", nullable = false, unique = true)
-    private String number;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "module_id")
+    private List<Event> events = new ArrayList<>();
 
-    @Column(name = "description", nullable = false, unique = true)
-    private String description;
-
-    @Override
-    public int compareTo(EventModule o) {
-        return number.compareTo(o.number);
+    public void addEvent(Event event) {
+        if (event.isNew()) {
+            events.add(event);
+        }
     }
 
+    public List<Event> getEventsByMonth(Month month) {
+        return events.stream()
+                .filter(event -> event.getMonth().equals(month))
+                .toList();
+    }
 }

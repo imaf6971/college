@@ -6,7 +6,7 @@ import static java.util.stream.Collectors.toMap;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import lombok.RequiredArgsConstructor;
-import lombok.var;
-
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/event-plan")
 public class EventPlanController {
 
-    private final EventPlanService eventPlanService;
+    private final EventModuleRepository moduleRepository;
+
+    public EventPlanController(EventModuleRepository moduleRepository) {
+        this.moduleRepository = moduleRepository;
+    }
 
     @ModelAttribute("months")
     public Map<Month, String> monthDropdown() {
@@ -39,8 +39,11 @@ public class EventPlanController {
 
     @GetMapping
     public String getEventPlan(Model model) {
-        var month = LocalDate.now().getMonth();
-        return getEventPlanByMonth(month, model);
+        return "forward:/event-plan?month=" + currentMonth();
+    }
+
+    private Month currentMonth() {
+        return LocalDate.now().getMonth();
     }
 
     @GetMapping(params = "month")
@@ -50,13 +53,17 @@ public class EventPlanController {
         return "event-plan";
     }
 
-    private void addEventPlanToModel(Month month, Model model) {
-        var eventPlan = eventPlanService.getEventPlanByMonth(month);
-        model.addAttribute("eventPlan", eventPlan);
-    }
-
     private void addMonthNameToModel(Month month, Model model) {
         model.addAttribute("selectedMonth", getMonthName(month));
+    }
+
+    private void addEventPlanToModel(Month month, Model model) {
+        model.addAttribute("eventPlan", getEventPlanForMonth(month));
+    }
+
+    private Map<EventModule, List<Event>> getEventPlanForMonth(Month month) {
+        return moduleRepository.findAll().stream()
+                .collect(toMap(module -> module, module -> module.getEventsByMonth(month)));
     }
 
 }
