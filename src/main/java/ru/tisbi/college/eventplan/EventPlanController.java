@@ -1,15 +1,22 @@
 package ru.tisbi.college.eventplan;
 
+import static java.time.format.TextStyle.FULL_STANDALONE;
+
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
+import lombok.var;
 
 @Controller
 @RequiredArgsConstructor
@@ -17,6 +24,19 @@ import lombok.RequiredArgsConstructor;
 public class EventPlanController {
 
     private final EventPlanService eventPlanService;
+
+    @ModelAttribute
+    public void monthDropdown(Model model) {
+        Map<Month, String> months = new LinkedHashMap<>();
+        for (var month: Month.values()) {
+            months.put(month, getMonthName(month));
+        }
+        model.addAttribute("months", months);
+    }
+
+    private String getMonthName(Month month) {
+        return month.getDisplayName(FULL_STANDALONE, new Locale("ru"));
+    }
 
     @GetMapping
     public String getEventPlan(Model model) {
@@ -26,9 +46,18 @@ public class EventPlanController {
 
     @GetMapping(params = "month")
     public String getEventPlanByMonth(@RequestParam Month month, Model model) {
+        addMonthNameToModel(month, model);
+        addEventPlanToModel(month, model);
+        return "event-plan";
+    }
+
+    private void addEventPlanToModel(Month month, Model model) {
         var eventPlan = eventPlanService.getEventPlanByMonth(month);
         model.addAttribute("eventPlan", eventPlan);
-        return "event-plan";
+    }
+
+    private void addMonthNameToModel(Month month, Model model) {
+        model.addAttribute("selectedMonth", getMonthName(month));
     }
 
 }

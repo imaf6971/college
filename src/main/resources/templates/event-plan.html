@@ -1,12 +1,54 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta th:replace="fragments/meta">
-  <title>Новая группа</title>
+  <title>План мероприятий</title>
 </head>
 <header th:replace="fragments/header" />
-<body class="container">
-  <h1>План мероприятий за</h1>
-  
+
+<body>
+  <div class="container">
+
+    <div class="row">
+      <h1 class="col-auto">
+        План мероприятий за
+      </h1>
+      <div class="col dropdown">
+        <button th:text="${selectedMonth}" class="btn btn-primary dropdown-toggle" type="button id="
+          dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"">
+      </button>
+      <ul class=" dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li th:each="month: ${months}">
+            <a th:text="${month.value}" th:href="@{/event-plan(month=${month.key})}" class="dropdown-item">
+            </a>
+          </li>
+          </ul>
+      </div>
+
+    </div>
+    <div th:each="module: ${eventPlan}">
+      <h3 th:text="${module.key.description}"></h3>
+      <ul>
+        <li th:each="event: ${module.value}">
+          <span th:text="${event.title}" th:remove="tag"></span>
+          <span th:switch="${event.eventType}" th:remove="tag">
+            <span th:case="${T(ru.tisbi.college.eventplan.EventType).LOCAL}" th:remove="tag">
+              <span class="badge bg-primary">Локальное</span>
+            </span>
+
+            <span th:case="${T(ru.tisbi.college.eventplan.EventType).REPUBLICAN}" th:remove="tag">
+              <span class="badge bg-success">Республиканское</span>
+            </span>
+
+            <span th:case="${T(ru.tisbi.college.eventplan.EventType).COUNTRYWIDE}" th:remove="tag">
+              <span class="badge bg-danger">Всероссийское</span>
+            </span>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
 </body>
+
 </html>
