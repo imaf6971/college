@@ -62,7 +62,7 @@ public class Group extends BaseEntity {
         }
     }
 
-    public String toNumberString() {
+    public String getNumberString() {
         var stringBuilder = new StringBuilder();
         stringBuilder.append(admissionYear.format(DateTimeFormatter.ofPattern("yy")));
         stringBuilder.append(isAfterSeniorSchool ? '2' : '1');
