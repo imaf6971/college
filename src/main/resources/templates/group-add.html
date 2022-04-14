@@ -7,8 +7,7 @@
 </head>
 <header th:replace="fragments/header" />
 
-<body>
-  <div class="container">
+<body class="container">
     <h1>Добавить группу</h1>
     <form th:action="@{/groups/add}" th:object="${group}" method="post">
 
@@ -37,7 +36,6 @@
 
       <button type="submit" class="btn btn-primary">Добавить</button>
     </form>
-  </div>
 </body>
 
 </html>
