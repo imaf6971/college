@@ -21,7 +21,7 @@
       <tbody>
         <tr th:each="group, i: ${specialization.value}">
           <td th:text="${i.count}"></td>
-          <td th:text="${group.toNumberString()}">191/2</td>
+          <td th:text="${group.getNumberString()}">191/2</td>
         </tr>
       </tbody>
     </table>
