@@ -27,11 +27,11 @@
       </div>
 
     </div>
-    <div th:each="module: ${eventPlan}">
-      <h3 th:text="${module.key.description}"></h3>
+    <div th:each="module: ${eventPlan}" th:if="${not #lists.isEmpty(module.value)}">
+      <h3 th:text="${module.key}"></h3>
       <ul>
         <li th:each="event: ${module.value}">
-          <span th:text="${event.title}" th:remove="tag"></span>
+          <span th:text="${event.name}" th:remove="tag"></span>
           <span th:switch="${event.eventType}" th:remove="tag">
             <span th:case="${T(ru.tisbi.college.eventplan.EventType).LOCAL}" th:remove="tag">
               <span class="badge bg-primary">Локальное</span>
