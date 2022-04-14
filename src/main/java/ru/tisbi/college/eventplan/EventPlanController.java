@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/event-plan")
 public class EventPlanController {
 
-    private final EventModuleRepository moduleRepository;
+    private final EventModuleRepository modules;
 
-    public EventPlanController(EventModuleRepository moduleRepository) {
-        this.moduleRepository = moduleRepository;
+    public EventPlanController(EventModuleRepository modules) {
+        this.modules = modules;
     }
 
     @ModelAttribute("months")
@@ -62,7 +62,7 @@ public class EventPlanController {
     }
 
     private Map<EventModule, List<Event>> getEventPlanForMonth(Month month) {
-        return moduleRepository.findAll().stream()
+        return modules.findAll().stream()
                 .collect(toMap(module -> module, module -> module.getEventsByMonth(month)));
     }
 
