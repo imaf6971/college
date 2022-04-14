@@ -1,5 +1,7 @@
 package ru.tisbi.college.eventplan;
 
+import static java.util.Collections.unmodifiableList;
+
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,10 @@ public class EventModule extends TitledEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "module_id")
     private List<Event> events = new ArrayList<>();
+
+    public List<Event> getEvents() {
+        return unmodifiableList(events);
+    }
 
     public void addEvent(Event event) {
         if (event.isNew()) {
