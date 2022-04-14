@@ -21,6 +21,13 @@ public class Event extends NamedEntity {
     @Column(name = "event_type", nullable = false)
     private EventType eventType;
 
+    public Event() {
+    }
+
+    public Event(Month month) {
+        this.month = month;
+    }
+
     public Month getMonth() {
         return month;
     }
@@ -36,5 +43,5 @@ public class Event extends NamedEntity {
     public void setEventType(EventType eventType) {
         this.eventType = eventType;
     }
-    
+
 }
