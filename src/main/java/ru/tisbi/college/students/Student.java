@@ -2,20 +2,13 @@ package ru.tisbi.college.students;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.Getter;
-import lombok.Setter;
-import ru.tisbi.college.groups.Group;
-import ru.tisbi.utils.jpa.AbstractEntity;
+import ru.tisbi.college.model.BaseEntity;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "students")
-public class Student extends AbstractEntity {
+public class Student extends BaseEntity {
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -26,7 +19,28 @@ public class Student extends AbstractEntity {
     @Column(name = "patronymic")
     private String patronymic;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "group_id", nullable = false)
-    private Group group;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
 }

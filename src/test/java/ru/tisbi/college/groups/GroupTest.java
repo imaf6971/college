@@ -7,6 +7,8 @@ import java.time.Year;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import ru.tisbi.college.students.Group;
+
 public class GroupTest {
     @Test
     void testToNumberString() {
