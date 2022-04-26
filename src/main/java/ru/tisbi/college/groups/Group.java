@@ -2,17 +2,20 @@ package ru.tisbi.college.groups;
 
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
 import ru.tisbi.college.specializations.Specialization;
+import ru.tisbi.college.students.Student;
 import ru.tisbi.utils.jpa.AbstractEntity;
 
 @Getter
@@ -32,6 +35,9 @@ public class Group extends AbstractEntity {
 
     @Column(name = "num", nullable = false)
     private short number;
+
+    @OneToMany(mappedBy = "group")
+    private List<Student> students;
 
     public String toNumberString() {
         var stringBuilder = new StringBuilder();
